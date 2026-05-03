@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text, useTheme, Surface, Button, RadioButton, Divider } from 'react-native-paper';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, useTheme, Surface, Button, Divider } from 'react-native-paper';
 
 // Données simulées en attendant Firestore
 const mockQuestions = [
@@ -59,17 +59,27 @@ export default function DiagnosticScreen({ navigation }) {
       {mockQuestions.map((q, i) => (
         <View key={q.id} style={styles.questionBlock}>
           <Text style={styles.questionText}>{i + 1}. {q.question}</Text>
-          <RadioButton.Group 
-            onValueChange={value => setAnswers({ ...answers, [q.id]: value })} 
-            value={answers[q.id]}
-          >
-            {q.options.map((opt, j) => (
-              <View style={styles.radioRow} key={j}>
-                <RadioButton value={opt} color={theme.colors.primary} />
-                <Text>{opt}</Text>
-              </View>
-            ))}
-          </RadioButton.Group>
+            {q.options.map((opt, j) => {
+              const isSelected = answers[q.id] === opt;
+              return (
+                <TouchableOpacity 
+                  key={j}
+                  style={[
+                    styles.radioRow, 
+                    isSelected && { borderColor: theme.colors.primary, backgroundColor: '#E8F5E9' }
+                  ]}
+                  onPress={() => setAnswers({ ...answers, [q.id]: opt })}
+                  activeOpacity={0.7}
+                >
+                  <View style={[styles.radioCircle, isSelected && { borderColor: theme.colors.primary }]}>
+                    {isSelected && <View style={[styles.selectedRb, { backgroundColor: theme.colors.primary }]} />}
+                  </View>
+                  <Text style={[styles.radioText, isSelected && { color: theme.colors.primary, fontWeight: 'bold' }]}>
+                    {opt}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
         </View>
       ))}
 
@@ -161,7 +171,32 @@ const styles = StyleSheet.create({
   radioRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: 8,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    backgroundColor: '#fafafa',
+  },
+  radioCircle: {
+    height: 22,
+    width: 22,
+    borderRadius: 11,
+    borderWidth: 2,
+    borderColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  selectedRb: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+  },
+  radioText: {
+    fontSize: 15,
+    color: '#444',
+    flex: 1,
   },
   button: {
     marginTop: 10,
