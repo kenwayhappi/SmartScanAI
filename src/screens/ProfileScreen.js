@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { Text, TextInput, Button, useTheme, Surface, Avatar } from 'react-native-paper';
 import { signOut, updatePassword, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { auth } from '../config/firebase';
@@ -12,10 +12,12 @@ export default function ProfileScreen({ navigation }) {
   const [exploitation, setExploitation] = useState('Plantation de la Mé');
 
   // États de sécurité (Authentification)
-  const [currentEmail, setCurrentEmail] = useState(auth.currentUser?.email || 'demo@demo.com');
+  const [currentEmail, setCurrentEmail] = useState(auth.currentUser?.email || '');
   const [newEmail, setNewEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -30,7 +32,7 @@ export default function ProfileScreen({ navigation }) {
 
   const reauthenticate = async (password) => {
     const user = auth.currentUser;
-    if (!user || user.email === 'demo@demo.com') return true; // Bypass for demo
+    if (!user) return false;
     const credential = EmailAuthProvider.credential(user.email, password);
     try {
       await reauthenticateWithCredential(user, credential);
@@ -61,7 +63,7 @@ export default function ProfileScreen({ navigation }) {
 
         // 2. Mise à jour de l'Email
         if (newEmail !== '' && newEmail !== currentEmail) {
-          if (auth.currentUser && auth.currentUser.email !== 'demo@demo.com') {
+          if (auth.currentUser) {
             await updateEmail(auth.currentUser, newEmail);
             setCurrentEmail(newEmail);
           }
@@ -69,7 +71,7 @@ export default function ProfileScreen({ navigation }) {
 
         // 3. Mise à jour du mot de passe
         if (newPassword !== '') {
-          if (auth.currentUser && auth.currentUser.email !== 'demo@demo.com') {
+          if (auth.currentUser) {
             await updatePassword(auth.currentUser, newPassword);
           }
         }
@@ -92,7 +94,15 @@ export default function ProfileScreen({ navigation }) {
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }} 
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView 
+        style={[styles.container, { backgroundColor: theme.colors.background }]}
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
       <View style={styles.header}>
         <Avatar.Text size={80} label={nom.charAt(0)} style={{ backgroundColor: theme.colors.primary }} />
         <Text style={styles.name}>{nom}</Text>
@@ -138,7 +148,13 @@ export default function ProfileScreen({ navigation }) {
               label="Nouveau Mot de passe"
               value={newPassword}
               onChangeText={setNewPassword}
-              secureTextEntry
+              secureTextEntry={!showNewPassword}
+              right={
+                <TextInput.Icon 
+                  icon={showNewPassword ? "eye-off" : "eye"} 
+                  onPress={() => setShowNewPassword(!showNewPassword)} 
+                />
+              }
               mode="outlined"
               style={styles.input}
             />
@@ -148,7 +164,13 @@ export default function ProfileScreen({ navigation }) {
                 label="Ancien mot de passe (Requis)"
                 value={oldPassword}
                 onChangeText={setOldPassword}
-                secureTextEntry
+                secureTextEntry={!showOldPassword}
+                right={
+                  <TextInput.Icon 
+                    icon={showOldPassword ? "eye-off" : "eye"} 
+                    onPress={() => setShowOldPassword(!showOldPassword)} 
+                  />
+                }
                 mode="outlined"
                 style={[styles.input, { borderColor: theme.colors.error }]}
               />
@@ -193,7 +215,8 @@ export default function ProfileScreen({ navigation }) {
       >
         Se déconnecter
       </Button>
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

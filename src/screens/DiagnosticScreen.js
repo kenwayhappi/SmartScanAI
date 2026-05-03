@@ -6,24 +6,36 @@ import { Text, useTheme, Surface, Button, RadioButton, Divider } from 'react-nat
 const mockQuestions = [
   {
     id: 1,
-    question: "Quelle partie de la plante est affectée ?",
-    options: ["Cabosse", "Feuilles", "Tronc"]
+    question: "Sur quelle partie du plant avez-vous pris la photo ?",
+    options: ["La cabosse", "Les jeunes feuilles", "Le tronc ou les branches"]
   },
   {
     id: 2,
-    question: "Quelle est la couleur de la tache ou de l'anomalie ?",
-    options: ["Brune/Noire", "Jaune", "Blanche"]
+    question: "Quelle est l'apparence précise du symptôme ?",
+    options: ["Tache brune/noire qui s'étend", "Feuilles qui rougissent/gonflent", "Trous ou morsures d'insectes"]
+  },
+  {
+    id: 3,
+    question: "Quelle est la texture ou l'odeur du problème ?",
+    options: ["Dure, moisie avec duvet blanc", "Sèche et craquante", "Rien de particulier"]
+  },
+  {
+    id: 4,
+    question: "Le problème se propage-t-il aux plantes voisines ?",
+    options: ["Oui, très rapidement", "Non, c'est isolé", "Je ne sais pas"]
   }
 ];
 
 const mockResult = {
-  maladie: "Pourriture Brune",
-  causes: "Champignon Phytophthora palmivora, favorisé par l'humidité et le manque d'ensoleillement.",
-  consequences: "Perte pouvant aller jusqu'à 80% de la production si non traitée. Contamination rapide des autres cabosses.",
+  maladie: "Pourriture Brune des Cabosses (Phytophthora)",
+  causes: "Maladie fongique causée par le champignon Phytophthora palmivora. Très virulente pendant la saison des pluies (forte humidité) ou dans les champs mal entretenus et trop ombragés.",
+  symptomes: "Apparition de taches brunes qui noircissent rapidement sur la cabosse. Parfois accompagnée d'un duvet blanc sporulé au centre. Les fèves à l'intérieur pourrissent totalement.",
+  consequences: "Sans intervention, cette maladie peut décimer entre 30% et 80% de votre récolte. Elle contamine extrêmement vite les autres arbres via l'eau de pluie ou les outils non désinfectés.",
   solutions: [
-    "Récolter fréquemment et éliminer les cabosses pourries loin du champ.",
-    "Élaguer les arbres pour améliorer la circulation de l'air.",
-    "Appliquer un fongicide à base de cuivre en début de saison des pluies."
+    "Action curative : Retirez immédiatement toutes les cabosses atteintes, sortez-les de la plantation et enterrez-les.",
+    "Entretien : Ébranchez (taillez) les arbres pour permettre à l'air de circuler et au soleil de sécher les plants.",
+    "Hygiène : Désinfectez régulièrement vos sécateurs et machettes à l'eau de Javel.",
+    "Traitement : En cas de forte épidémie, pulvérisez un fongicide à base de cuivre (bouillie bordelaise) au début des pluies."
   ]
 };
 
@@ -84,6 +96,9 @@ export default function DiagnosticScreen({ navigation }) {
       
       <Divider style={styles.divider} />
       
+      <Text style={styles.sectionTitle}>Symptômes :</Text>
+      <Text style={styles.text}>{mockResult.symptomes}</Text>
+
       <Text style={styles.sectionTitle}>Causes :</Text>
       <Text style={styles.text}>{mockResult.causes}</Text>
 
@@ -97,7 +112,7 @@ export default function DiagnosticScreen({ navigation }) {
 
       <Button 
         mode="outlined" 
-        onPress={() => navigation.navigate('Dashboard')} 
+        onPress={() => navigation.navigate('MainTabs')} 
         textColor={theme.colors.primary}
         style={[styles.button, { marginTop: 30 }]}
       >

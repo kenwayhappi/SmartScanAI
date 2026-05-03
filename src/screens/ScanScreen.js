@@ -30,22 +30,21 @@ export default function ScanScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing="back">
-        <View style={styles.overlay}>
-          {/* Cadre de visée */}
-          <View style={styles.scanFrame} />
-          
-          <Text style={styles.instructions}>
-            Placez la feuille ou le cabosse malade au centre du cadre
-          </Text>
+      <CameraView style={styles.camera} facing="back" />
+      <View style={[styles.overlay, StyleSheet.absoluteFillObject]}>
+        {/* Cadre de visée */}
+        <View style={styles.scanFrame} />
+        
+        <Text style={styles.instructions}>
+          Placez la feuille ou le cabosse malade au centre du cadre
+        </Text>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
-              <View style={styles.captureButtonInner} />
-            </TouchableOpacity>
-          </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
+            <View style={styles.captureButtonInner} />
+          </TouchableOpacity>
         </View>
-      </CameraView>
+      </View>
     </View>
   );
 }

@@ -12,12 +12,6 @@ export default function LoginScreen({ navigation }) {
   const theme = useTheme();
 
   const handleLogin = async () => {
-    // Si l'utilisateur n'a pas encore mis ses clés Firebase, on bypass la vérification pour la démo
-    if (email === 'demo@demo.com' && password === 'demo') {
-      navigation.replace('MainTabs');
-      return;
-    }
-
     if (!email || !password) {
       setError('Veuillez remplir tous les champs.');
       return;
@@ -82,9 +76,7 @@ export default function LoginScreen({ navigation }) {
             Se connecter
           </Button>
 
-          <Text style={styles.hintText}>
-            Astuce démo : utilisez demo@demo.com / demo pour tester sans Firebase.
-          </Text>
+          {/* Les identifiants de test sont désormais uniquement dans le README */}
 
           <Button 
             mode="text" 
