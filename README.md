@@ -44,34 +44,67 @@ L'application utilise une architecture moderne adaptée aux environnements contr
 Même si les données sont stockées en local pour le "Hors-ligne", l'application a été modélisée selon ces classes (Tables) :
 
 - **Classe `Utilisateur`** (Gérée par Firebase Auth & AsyncStorage)
-  - `id_user` : String (Clé primaire Firebase UID)
-  - `email` : String
-  - `nom_complet` : String
-  - `nom_exploitation` : String
-  - `mot_de_passe` : String (Crypté par Firebase)
+  - *Attributs :*
+    - `id_user` : String (Clé primaire Firebase UID)
+    - `email` : String
+    - `nom_complet` : String
+    - `nom_exploitation` : String
+    - `mot_de_passe` : String (Crypté par Firebase)
+  - *Méthodes :*
+    - `sInscrire(email, password)`
+    - `seConnecter(email, password)`
+    - `seDeconnecter()`
+    - `modifierProfil(newEmail, newPassword)`
 
 - **Classe `Maladie`** (Gérée en base de connaissances locale)
-  - `id_maladie` : Entier (Clé primaire)
-  - `nom` : String (ex: Pourriture Brune)
-  - `causes` : String
-  - `symptomes` : String
-  - `consequences` : String
-  - `solutions` : Tableau de Strings (Array)
+  - *Attributs :*
+    - `id_maladie` : Entier (Clé primaire)
+    - `nom` : String (ex: Pourriture Brune)
+    - `causes` : String
+    - `symptomes` : String
+    - `consequences` : String
+    - `solutions` : Tableau de Strings (Array)
+  - *Méthodes :*
+    - `getDetailsMaladie()`
+    - `getListeSolutions()`
 
 - **Classe `BonnePratique`** (Gérée en base de connaissances locale)
-  - `id_pratique` : Entier (Clé primaire)
-  - `titre` : String
-  - `description` : String
+  - *Attributs :*
+    - `id_pratique` : Entier (Clé primaire)
+    - `titre` : String
+    - `description` : String
+  - *Méthodes :*
+    - `afficherConseil()`
 
 - **Classe `Diagnostic`** *(Virtuelle, instanciée lors de l'utilisation)*
-  - `id_diagnostic` : Entier
-  - `date_scan` : Date
-  - `reponses_utilisateur` : Tableau
-  - `resultat_id_maladie` : Entier (Clé étrangère vers Maladie)
+  - *Attributs :*
+    - `id_diagnostic` : Entier
+    - `date_scan` : Date
+    - `reponses_utilisateur` : Tableau
+    - `resultat_id_maladie` : Entier (Clé étrangère vers Maladie)
+  - *Méthodes :*
+    - `demarrerScan()`
+    - `enregistrerReponse(question_id, reponse)`
+    - `calculerResultat() : Maladie`
+    - `afficherRapport()`
 
-**Relations :**
-- Un `Utilisateur` peut réaliser plusieurs (0..*) `Diagnostics`.
-- Un `Diagnostic` identifie une (1..1) `Maladie`.
+- **Classe `PrevisionMeteo`** (Gérée via l'API Open-Meteo)
+  - *Attributs :*
+    - `id_prevision` : Entier
+    - `date` : Date
+    - `temperature_min` : Float
+    - `temperature_max` : Float
+    - `risque_pluie` : Entier (Pourcentage)
+  - *Méthodes :*
+    - `actualiserMeteo(latitude, longitude)`
+    - `afficherPrevisionsSur7Jours()`
+
+**Relations UML Complètes :**
+- Un `Utilisateur` peut réaliser plusieurs (0..*) `Diagnostics`. (Relation 1-N)
+- Un `Diagnostic` identifie une (1..1) `Maladie`. (Relation 1-1)
+- Un `Utilisateur` consulte plusieurs (0..*) `PrevisionMeteo`. (Relation 1-N)
+- Un `Utilisateur` peut lire plusieurs (0..*) `BonnePratique`. (Relation 1-N)
+- Une `Maladie` peut être prévenue/traitée par une ou plusieurs (1..*) `BonnePratique`. (Relation N-N / Optionnelle mais très appréciée dans les rapports pour montrer le lien logique).
 
 ## 4. Diagramme de Séquence : Cas "Faire un Diagnostic"
 
