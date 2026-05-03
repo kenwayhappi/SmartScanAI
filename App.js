@@ -1,20 +1,95 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ActivityIndicator } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { onAuthStateChanged } from 'firebase/auth';
 
-export default function App() {
+import { theme } from './src/theme/theme';
+import { auth } from './src/config/firebase';
+
+// Navigators & Screens
+import MainTabNavigator from './src/navigation/MainTabNavigator';
+import LoginScreen from './src/screens/LoginScreen';
+import OnboardingScreen from './src/screens/OnboardingScreen';
+import DiagnosticScreen from './src/screens/DiagnosticScreen';
+
+const Stack = createStackNavigator();
+
+function NavigationWrapper() {
+  const [loading, setLoading] = useState(true);
+  const [initialRoute, setInitialRoute] = useState('Onboarding');
+
+  useEffect(() => {
+    // Vérifier si l'utilisateur est déjà connecté avec Firebase
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // L'utilisateur est connecté, on l'envoie directement sur le Dashboard (MainTabs)
+        setInitialRoute('MainTabs');
+      } else {
+        // Non connecté, on lui montre l'Onboarding / Login
+        setInitialRoute('Onboarding');
+      }
+      setLoading(false); // Fin du chargement
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.colors.background }}>
+        <ActivityIndicator size="large" color={theme.colors.primary} />
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator 
+        initialRouteName={initialRoute}
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      >
+        <Stack.Screen 
+          name="Onboarding" 
+          component={OnboardingScreen} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="Login" 
+          component={LoginScreen} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="MainTabs" 
+          component={MainTabNavigator} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="Diagnostic" 
+          component={DiagnosticScreen} 
+          options={{ title: 'Résultat du Diagnostic' }} 
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <PaperProvider theme={theme}>
+        <NavigationWrapper />
+      </PaperProvider>
+    </SafeAreaProvider>
+  );
+}
