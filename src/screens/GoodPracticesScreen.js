@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { Text, useTheme, Surface, Card, Title, Paragraph } from 'react-native-paper';
 import { getBonnesPratiques } from '../services/firebaseService';
+import { useTranslation } from 'react-i18next';
 
 // Données de secours si Firebase n'est pas configuré
 const fallbackPratiques = [
@@ -39,6 +40,7 @@ const fallbackPratiques = [
 
 export default function GoodPracticesScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [pratiques, setPratiques] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,8 +73,8 @@ export default function GoodPracticesScreen() {
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Text style={styles.headerTitle}>Bonnes Pratiques Agricoles</Text>
-      <Text style={styles.headerSubtitle}>Conseils d'experts pour optimiser votre rendement.</Text>
+      <Text style={styles.headerTitle}>{t('tips.title')}</Text>
+      <Text style={styles.headerSubtitle}>{t('dashboard.welcome_sub')}</Text>
 
       {pratiques.map((pratique, index) => (
         <Card key={pratique.id || index} style={styles.card} elevation={2}>

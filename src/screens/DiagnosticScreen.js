@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Text, useTheme, Surface, Button, Divider } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 // Données simulées en attendant Firestore
 const mockQuestions = [
@@ -41,6 +42,7 @@ const mockResult = {
 
 export default function DiagnosticScreen({ navigation }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [step, setStep] = useState(0); // 0 = questionnaire, 1 = résultat
   const [answers, setAnswers] = useState({});
 
@@ -99,14 +101,14 @@ export default function DiagnosticScreen({ navigation }) {
     <Surface style={[styles.card, { borderColor: theme.colors.error, borderWidth: 1 }]} elevation={3}>
       <View style={styles.resultHeader}>
         <Text style={styles.alertIcon}>⚠️</Text>
-        <Text style={[styles.title, { color: theme.colors.error }]}>Maladie détectée</Text>
+        <Text style={[styles.title, { color: theme.colors.error }]}>{t('diagnostic.found_disease')}</Text>
       </View>
       
       <Text style={styles.diseaseName}>{mockResult.maladie}</Text>
       
       <Divider style={styles.divider} />
       
-      <Text style={styles.sectionTitle}>Symptômes :</Text>
+      <Text style={styles.sectionTitle}>{t('diagnostic.symptoms')}</Text>
       <Text style={styles.text}>{mockResult.symptomes}</Text>
 
       <Text style={styles.sectionTitle}>Causes :</Text>
@@ -115,7 +117,7 @@ export default function DiagnosticScreen({ navigation }) {
       <Text style={styles.sectionTitle}>Conséquences :</Text>
       <Text style={styles.text}>{mockResult.consequences}</Text>
 
-      <Text style={styles.sectionTitle}>Solutions recommandées :</Text>
+      <Text style={styles.sectionTitle}>{t('diagnostic.treatment')}</Text>
       {mockResult.solutions.map((sol, idx) => (
         <Text key={idx} style={styles.listItem}>• {sol}</Text>
       ))}

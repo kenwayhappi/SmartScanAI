@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Alert, KeyboardAvoidingView, Platform } from 'react-native';
-import { Text, TextInput, Button, useTheme, Surface, Avatar } from 'react-native-paper';
+import { Text, TextInput, Button, useTheme, Surface, Avatar, SegmentedButtons } from 'react-native-paper';
 import { signOut, updatePassword, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { useTranslation } from 'react-i18next';
 
 export default function ProfileScreen({ navigation }) {
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
 
   // États locaux (Profil utilisateur)
@@ -20,6 +22,14 @@ export default function ProfileScreen({ navigation }) {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Langue
+  const [language, setLanguage] = useState(i18n.language.startsWith('fr') ? 'fr' : 'en');
+
+  const handleLanguageChange = (val) => {
+    setLanguage(val);
+    i18n.changeLanguage(val);
+  };
 
   const handleLogout = async () => {
     try {
@@ -38,7 +48,7 @@ export default function ProfileScreen({ navigation }) {
       await reauthenticateWithCredential(user, credential);
       return true;
     } catch (error) {
-      Alert.alert("Erreur", "L'ancien mot de passe est incorrect.");
+      Alert.alert("Erreur", t('profile.error_auth_failed'));
       return false;
     }
   };
@@ -50,7 +60,7 @@ export default function ProfileScreen({ navigation }) {
       // 1. Réauthentification si on veut changer email ou mot de passe
       if (newEmail !== '' || newPassword !== '') {
         if (!oldPassword) {
-          Alert.alert("Requis", "Vous devez renseigner votre ancien mot de passe pour des raisons de sécurité.");
+          Alert.alert("Requis", t('profile.error_req_old_pass'));
           setLoading(false);
           return;
         }
@@ -77,16 +87,14 @@ export default function ProfileScreen({ navigation }) {
         }
       }
 
-      // 4. (Optionnel) Mise à jour des autres infos (nom, exploitation) dans Firestore ici
-
-      Alert.alert("Succès", "Votre profil a été mis à jour avec succès.");
+      Alert.alert("Succès", t('profile.success_update'));
       setIsEditing(false);
       setOldPassword('');
       setNewPassword('');
       setNewEmail('');
 
     } catch (error) {
-      Alert.alert("Erreur", "Une erreur est survenue lors de la mise à jour.");
+      Alert.alert("Erreur", t('profile.error_update'));
       console.error(error);
     } finally {
       setLoading(false);
@@ -110,10 +118,10 @@ export default function ProfileScreen({ navigation }) {
       </View>
 
       <Surface style={styles.surface} elevation={2}>
-        <Text style={styles.sectionTitle}>Mes informations</Text>
+        <Text style={styles.sectionTitle}>{t('profile.my_info')}</Text>
 
         <TextInput
-          label="Nom complet"
+          label={t('profile.full_name')}
           value={nom}
           onChangeText={setNom}
           disabled={!isEditing}
@@ -122,7 +130,7 @@ export default function ProfileScreen({ navigation }) {
         />
 
         <TextInput
-          label="Nom de l'exploitation"
+          label={t('profile.farm_name')}
           value={exploitation}
           onChangeText={setExploitation}
           disabled={!isEditing}
@@ -132,10 +140,10 @@ export default function ProfileScreen({ navigation }) {
 
         {isEditing && (
           <View style={styles.securitySection}>
-            <Text style={styles.securityTitle}>Sécurité (Optionnel)</Text>
+            <Text style={styles.securityTitle}>{t('profile.security')}</Text>
 
             <TextInput
-              label="Nouvel Email"
+              label={t('profile.new_email')}
               value={newEmail}
               onChangeText={setNewEmail}
               mode="outlined"
@@ -145,7 +153,7 @@ export default function ProfileScreen({ navigation }) {
             />
 
             <TextInput
-              label="Nouveau Mot de passe"
+              label={t('profile.new_password')}
               value={newPassword}
               onChangeText={setNewPassword}
               secureTextEntry={!showNewPassword}
@@ -161,7 +169,7 @@ export default function ProfileScreen({ navigation }) {
 
             {(newEmail !== '' || newPassword !== '') && (
               <TextInput
-                label="Ancien mot de passe (Requis)"
+                label={t('profile.old_password')}
                 value={oldPassword}
                 onChangeText={setOldPassword}
                 secureTextEntry={!showOldPassword}
@@ -181,7 +189,7 @@ export default function ProfileScreen({ navigation }) {
         {isEditing ? (
           <View style={styles.actionButtons}>
             <Button mode="outlined" onPress={() => setIsEditing(false)} style={{ flex: 1, marginRight: 10 }}>
-              Annuler
+              {t('profile.cancel')}
             </Button>
             <Button
               mode="contained"
@@ -190,7 +198,7 @@ export default function ProfileScreen({ navigation }) {
               buttonColor={theme.colors.success}
               style={{ flex: 1 }}
             >
-              Enregistrer
+              {t('profile.save')}
             </Button>
           </View>
         ) : (
@@ -201,9 +209,24 @@ export default function ProfileScreen({ navigation }) {
             style={styles.button}
             icon="pencil"
           >
-            Modifier le profil
+            {t('profile.edit_profile')}
           </Button>
         )}
+      </Surface>
+
+      {/* Préférences de langue */}
+      <Surface style={styles.surface} elevation={2}>
+        <Text style={styles.sectionTitle}>{t('profile.language_pref')}</Text>
+        <Text style={{ marginBottom: 10, color: '#666' }}>{t('profile.select_language')}</Text>
+        <SegmentedButtons
+          value={language}
+          onValueChange={handleLanguageChange}
+          buttons={[
+            { value: 'fr', label: 'Français' },
+            { value: 'en', label: 'English' },
+          ]}
+          theme={{ colors: { secondaryContainer: theme.colors.primaryContainer } }}
+        />
       </Surface>
 
       <Button
@@ -213,7 +236,7 @@ export default function ProfileScreen({ navigation }) {
         style={styles.logoutButton}
         icon="logout"
       >
-        Se déconnecter
+        {t('profile.logout')}
       </Button>
       </ScrollView>
     </KeyboardAvoidingView>

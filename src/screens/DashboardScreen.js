@@ -3,9 +3,11 @@ import { View, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from 
 import { Text, useTheme, Surface, Card, ActivityIndicator } from 'react-native-paper';
 import * as Location from 'expo-location';
 import { getWeather } from '../services/weatherService';
+import { useTranslation } from 'react-i18next';
 
 export default function DashboardScreen({ navigation }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [weather, setWeather] = useState(null);
 
   useEffect(() => {
@@ -42,8 +44,8 @@ export default function DashboardScreen({ navigation }) {
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.header}>
-        <Text style={styles.welcomeText}>Smart Scan AI</Text>
-        <Text style={styles.subText}>Bon retour sur votre exploitation</Text>
+        <Text style={styles.welcomeText}>{t('dashboard.welcome')}</Text>
+        <Text style={styles.subText}>{t('dashboard.welcome_sub')}</Text>
       </View>
 
       <View style={styles.content}>
@@ -55,7 +57,7 @@ export default function DashboardScreen({ navigation }) {
                 <Text style={styles.weatherIcon}>{getWeatherIcon(weather.weathercode)}</Text>
                 <View>
                   <Text style={styles.weatherTemp}>{weather.temperature}°C</Text>
-                  <Text style={styles.weatherDesc}>Aperçu actuel. Voir plus ➔</Text>
+                  <Text style={styles.weatherDesc}>{t('dashboard.quick_weather')}</Text>
                 </View>
               </View>
             ) : (
@@ -65,7 +67,7 @@ export default function DashboardScreen({ navigation }) {
         </TouchableOpacity>
 
         {/* CTA Principal */}
-        <Text style={styles.sectionTitle}>Que faire aujourd'hui ?</Text>
+        <Text style={styles.sectionTitle}>{t('dashboard.what_to_do')}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Scan')}>
           <ImageBackground 
             source={{ uri: 'https://images.unsplash.com/photo-1611077541295-2d4e8c156644?q=80&w=600&auto=format&fit=crop' }} 
@@ -74,20 +76,20 @@ export default function DashboardScreen({ navigation }) {
           >
             <View style={styles.ctaOverlay}>
               <Text style={styles.ctaIcon}>📷</Text>
-              <Text style={styles.ctaTitle}>Nouveau Diagnostic</Text>
-              <Text style={styles.ctaSubtitle}>Analysez vos plants avec l'IA</Text>
+              <Text style={styles.ctaTitle}>{t('dashboard.new_scan')}</Text>
+              <Text style={styles.ctaSubtitle}>{t('dashboard.scan_desc')}</Text>
             </View>
           </ImageBackground>
         </TouchableOpacity>
 
         {/* Astuce du jour */}
-        <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Conseil du jour</Text>
+        <Text style={[styles.sectionTitle, { marginTop: 20 }]}>{t('dashboard.tip_of_day')}</Text>
         <Card style={styles.tipCard} elevation={2} onPress={() => navigation.navigate('Conseils')}>
           <Card.Content style={styles.tipContent}>
             <Text style={styles.tipIcon}>💡</Text>
             <View style={styles.tipTextContainer}>
-              <Text style={styles.tipTitle}>Taille de formation</Text>
-              <Text style={styles.tipDesc} numberOfLines={2}>Une bonne taille permet de réduire l'humidité et d'éviter les maladies fongiques...</Text>
+              <Text style={styles.tipTitle}>{t('dashboard.tip_title')}</Text>
+              <Text style={styles.tipDesc} numberOfLines={2}>{t('dashboard.tip_desc')}</Text>
             </View>
           </Card.Content>
         </Card>

@@ -1,34 +1,37 @@
 import React, { useState, useRef } from 'react';
 import { View, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { Text, Button, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import * as Animatable from 'react-native-animatable';
 
 const { width } = Dimensions.get('window');
 
-const slides = [
-  {
-    id: '1',
-    title: 'Détection IA Rapide',
-    description: 'Prenez en photo vos plants de cacao et identifiez instantanément les maladies grâce à notre intelligence artificielle.',
-    icon: '📸'
-  },
-  {
-    id: '2',
-    title: 'Conseils Personnalisés',
-    description: 'Accédez à un catalogue complet de bonnes pratiques et recevez des recommandations adaptées à votre plantation.',
-    icon: '🌱'
-  },
-  {
-    id: '3',
-    title: 'Météo Intelligente',
-    description: 'Anticipez les risques agricoles grâce à nos alertes météo locales et protégez vos récoltes.',
-    icon: '⛅'
-  }
-];
-
 export default function OnboardingScreen({ navigation }) {
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
+
+  const slides = [
+    {
+      id: '1',
+      title: t('onboarding.slide1_title'),
+      description: t('onboarding.slide1_desc'),
+      icon: '📸'
+    },
+    {
+      id: '2',
+      title: t('onboarding.slide2_title'),
+      description: t('onboarding.slide2_desc'),
+      icon: '🌱'
+    },
+    {
+      id: '3',
+      title: t('onboarding.slide3_title'),
+      description: t('onboarding.slide3_desc'),
+      icon: '⛅'
+    }
+  ];
 
   const viewableItemsChanged = useRef(({ viewableItems }) => {
     if (viewableItems && viewableItems.length > 0) {
@@ -52,18 +55,36 @@ export default function OnboardingScreen({ navigation }) {
     }
   };
 
+  const toggleLanguage = () => {
+    const nextLang = i18n.language.startsWith('fr') ? 'en' : 'fr';
+    i18n.changeLanguage(nextLang);
+  };
+
   const renderItem = ({ item }) => (
     <View style={styles.slide}>
-      <View style={styles.iconContainer}>
+      <Animatable.View animation="bounceIn" duration={1500} style={styles.iconContainer}>
         <Text style={styles.icon}>{item.icon}</Text>
-      </View>
-      <Text style={[styles.title, { color: theme.colors.primary }]}>{item.title}</Text>
-      <Text style={styles.description}>{item.description}</Text>
+      </Animatable.View>
+      <Animatable.Text animation="fadeInUp" delay={200} style={[styles.title, { color: theme.colors.primary }]}>
+        {item.title}
+      </Animatable.Text>
+      <Animatable.Text animation="fadeInUp" delay={400} style={styles.description}>
+        {item.description}
+      </Animatable.Text>
     </View>
   );
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {/* Sélecteur de langue */}
+      <View style={styles.langContainer}>
+        <TouchableOpacity onPress={toggleLanguage} style={styles.langButton}>
+          <Text style={{ color: theme.colors.primary, fontWeight: 'bold' }}>
+            {i18n.language.startsWith('fr') ? 'FR / EN' : 'EN / FR'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       <FlatList
         data={slides}
         renderItem={renderItem}
@@ -95,11 +116,11 @@ export default function OnboardingScreen({ navigation }) {
         <View style={styles.buttonContainer}>
           {currentIndex === 0 ? (
             <TouchableOpacity onPress={() => navigation.replace('Login')} style={styles.skipButton}>
-              <Text style={{ color: '#888' }}>Passer</Text>
+              <Text style={{ color: '#888' }}>{t('onboarding.skip')}</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={handlePrev} style={styles.skipButton}>
-              <Text style={{ color: '#888' }}>Précédent</Text>
+              <Text style={{ color: '#888' }}>{t('onboarding.prev')}</Text>
             </TouchableOpacity>
           )}
           <Button 
@@ -108,7 +129,7 @@ export default function OnboardingScreen({ navigation }) {
             buttonColor={theme.colors.primary}
             style={styles.nextButton}
           >
-            {currentIndex === slides.length - 1 ? "Commencer" : "Suivant"}
+            {currentIndex === slides.length - 1 ? t('onboarding.start') : t('onboarding.next')}
           </Button>
         </View>
       </View>
@@ -119,6 +140,22 @@ export default function OnboardingScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  langContainer: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 10,
+  },
+  langButton: {
+    padding: 8,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
   },
   slide: {
     width,

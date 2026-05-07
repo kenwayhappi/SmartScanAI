@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Alert } from 'react-native';
 import { TextInput, Button, Text, useTheme, Surface } from 'react-native-paper';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { useTranslation } from 'react-i18next';
 import * as Animatable from 'react-native-animatable';
 
-export default function LoginScreen({ navigation }) {
+export default function RegisterScreen({ navigation }) {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const theme = useTheme();
 
-  const handleLogin = async () => {
-    if (!email || !password) {
+  const handleRegister = async () => {
+    if (!email || !password || !confirmPassword) {
       setError(t('auth.error_fill_fields'));
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError(t('auth.error_password_mismatch'));
       return;
     }
 
     try {
       setLoading(true);
       setError('');
-      await signInWithEmailAndPassword(auth, email, password);
-      navigation.replace('MainTabs');
+      await createUserWithEmailAndPassword(auth, email, password);
+      Alert.alert("Succès", "Votre compte a été créé avec succès.");
+      // Après l'inscription, on renvoie vers le login
+      navigation.replace('Login');
     } catch (err) {
-      setError(t('auth.error_login_failed'));
+      setError(t('auth.error_register_failed') + " (" + err.message + ")");
     } finally {
       setLoading(false);
     }
@@ -45,7 +53,7 @@ export default function LoginScreen({ navigation }) {
 
         <Animatable.View animation="fadeInUp" duration={1000}>
           <Surface style={styles.surface} elevation={4}>
-            <Text style={styles.loginTitle}>{t('auth.login_title')}</Text>
+            <Text style={styles.loginTitle}>{t('auth.register_title')}</Text>
             
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
@@ -68,34 +76,34 @@ export default function LoginScreen({ navigation }) {
               style={styles.input}
               theme={{ colors: { primary: theme.colors.primary } }}
             />
+            <TextInput
+              label={t('auth.confirm_password_label')}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              mode="outlined"
+              secureTextEntry
+              style={styles.input}
+              theme={{ colors: { primary: theme.colors.primary } }}
+            />
 
             <Button 
               mode="contained" 
-              onPress={handleLogin} 
+              onPress={handleRegister} 
               loading={loading}
               style={styles.button}
               buttonColor={theme.colors.primary}
               textColor="#FFF"
             >
-              {t('auth.login_button')}
-            </Button>
-
-            <Button 
-              mode="outlined" 
-              onPress={() => navigation.navigate('Register')}
-              style={[styles.button, { marginTop: 15 }]}
-              textColor={theme.colors.primary}
-            >
-              {t('auth.create_account_button')}
+              {t('auth.register_button')}
             </Button>
 
             <Button 
               mode="text" 
-              onPress={() => navigation.navigate('Onboarding')}
+              onPress={() => navigation.navigate('Login')}
               textColor={theme.colors.primary}
               style={styles.onboardingLink}
             >
-              {t('auth.tutorial_link')}
+              {t('auth.back_to_login')}
             </Button>
           </Surface>
         </Animatable.View>
@@ -149,6 +157,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   onboardingLink: {
-    marginTop: 20,
+    marginTop: 10,
   }
 });

@@ -1,0 +1,89 @@
+{
+  "onboarding": {
+    "slide1_title": "Fast AI Detection",
+    "slide1_desc": "Take a picture of your cocoa plants and instantly identify diseases using our artificial intelligence.",
+    "slide2_title": "Personalized Advice",
+    "slide2_desc": "Access a complete catalog of good practices and receive recommendations tailored to your plantation.",
+    "slide3_title": "Smart Weather",
+    "slide3_desc": "Anticipate agricultural risks with our local weather alerts and protect your harvests.",
+    "skip": "Skip",
+    "prev": "Previous",
+    "next": "Next",
+    "start": "Get Started"
+  },
+  "auth": {
+    "app_title": "Smart Scan AI",
+    "app_subtitle": "The smart assistant for cocoa farming",
+    "login_title": "Login",
+    "email_label": "Email",
+    "password_label": "Password",
+    "login_button": "Log In",
+    "create_account_button": "Create an account",
+    "tutorial_link": "Watch presentation (Tutorial)",
+    "error_fill_fields": "Please fill in all fields.",
+    "error_login_failed": "Incorrect credentials or login error.",
+    
+    "register_title": "Create Account",
+    "confirm_password_label": "Confirm Password",
+    "register_button": "Sign Up",
+    "back_to_login": "Already have an account? Log In",
+    "error_password_mismatch": "Passwords do not match.",
+    "error_register_failed": "Error during account creation."
+  },
+  "profile": {
+    "my_info": "My Information",
+    "full_name": "Full Name",
+    "farm_name": "Farm Name",
+    "security": "Security (Optional)",
+    "new_email": "New Email",
+    "new_password": "New Password",
+    "old_password": "Old Password (Required)",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit_profile": "Edit Profile",
+    "logout": "Log Out",
+    "language_pref": "Language Preferences",
+    "select_language": "App Language",
+    "success_update": "Your profile has been successfully updated.",
+    "error_update": "An error occurred during the update.",
+    "error_req_old_pass": "You must enter your old password for security reasons.",
+    "error_auth_failed": "The old password is incorrect."
+  },
+  "tabs": {
+    "home": "Home",
+    "tips": "Tips",
+    "scan": "AI Scan",
+    "weather": "Weather",
+    "profile": "Profile"
+  },
+  "dashboard": {
+    "welcome": "Smart Scan AI",
+    "welcome_sub": "Welcome back to your farm",
+    "quick_weather": "Current overview. See more ➔",
+    "what_to_do": "What to do today?",
+    "new_scan": "New Diagnostic",
+    "scan_desc": "Analyze your plants with AI",
+    "tip_of_day": "Tip of the day",
+    "tip_title": "Formative Pruning",
+    "tip_desc": "Good pruning reduces humidity and prevents fungal diseases..."
+  },
+  "scan": {
+    "permission_text": "We need your permission to use the camera to analyze the plants.",
+    "permission_btn": "Grant permission",
+    "instructions": "Place the diseased leaf or pod in the center of the frame"
+  },
+  "weather": {
+    "title": "Weather & Forecast",
+    "forecast": "7-day Forecast"
+  },
+  "diagnostic": {
+    "title": "Diagnostic Result",
+    "analyzing": "Analyzing...",
+    "found_disease": "Disease detected",
+    "symptoms": "Symptoms:",
+    "treatment": "Recommended treatment:"
+  },
+  "tips": {
+    "title": "Good Agricultural Practices"
+  }
+}

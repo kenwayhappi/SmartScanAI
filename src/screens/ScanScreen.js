@@ -2,10 +2,12 @@ import React, { useState, useRef } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { Button, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 export default function ScanScreen({ navigation }) {
   const [permission, requestPermission] = useCameraPermissions();
   const theme = useTheme();
+  const { t } = useTranslation();
 
   if (!permission) {
     return <View />;
@@ -14,9 +16,9 @@ export default function ScanScreen({ navigation }) {
   if (!permission.granted) {
     return (
       <View style={styles.permissionContainer}>
-        <Text style={styles.permissionText}>Nous avons besoin de votre permission pour utiliser la caméra afin d'analyser les plants.</Text>
+        <Text style={styles.permissionText}>{t('scan.permission_text')}</Text>
         <Button mode="contained" onPress={requestPermission} buttonColor={theme.colors.primary}>
-          Accorder la permission
+          {t('scan.permission_btn')}
         </Button>
       </View>
     );
@@ -36,7 +38,7 @@ export default function ScanScreen({ navigation }) {
         <View style={styles.scanFrame} />
         
         <Text style={styles.instructions}>
-          Placez la feuille ou le cabosse malade au centre du cadre
+          {t('scan.instructions')}
         </Text>
 
         <View style={styles.buttonContainer}>

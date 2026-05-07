@@ -3,9 +3,11 @@ import { View, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import { Text, useTheme, Surface, Divider } from 'react-native-paper';
 import * as Location from 'expo-location';
 import { getWeather } from '../services/weatherService';
+import { useTranslation } from 'react-i18next';
 
 export default function WeatherScreen() {
   const theme = useTheme();
+  const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
@@ -47,10 +49,10 @@ export default function WeatherScreen() {
   };
 
   const getDayName = (dateString, index) => {
-    if (index === 0) return "Aujourd'hui";
-    if (index === 1) return "Demain";
+    if (index === 0) return t('tabs.home') === 'Home' ? 'Today' : "Aujourd'hui";
+    if (index === 1) return t('tabs.home') === 'Home' ? 'Tomorrow' : "Demain";
     const date = new Date(dateString);
-    return date.toLocaleDateString('fr-FR', { weekday: 'long' });
+    return date.toLocaleDateString(i18n.language.startsWith('fr') ? 'fr-FR' : 'en-US', { weekday: 'long' });
   };
 
   if (loading) {
@@ -65,7 +67,7 @@ export default function WeatherScreen() {
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
 
-      <Text style={styles.pageTitle}>Météo Agricole</Text>
+      <Text style={styles.pageTitle}>{t('weather.title')}</Text>
 
       {weatherData && weatherData.current_weather && (
         <Surface style={styles.mainCard} elevation={4}>
@@ -80,7 +82,7 @@ export default function WeatherScreen() {
         </Surface>
       )}
 
-      <Text style={styles.sectionTitle}>Prévisions sur 7 jours</Text>
+      <Text style={styles.sectionTitle}>{t('weather.forecast')}</Text>
       
       {weatherData && weatherData.daily && (
         <View style={styles.forecastContainer}>

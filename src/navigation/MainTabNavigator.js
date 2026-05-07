@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'react-native-paper';
 import { Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 // Screens
 import DashboardScreen from '../screens/DashboardScreen'; // We will rename or treat as HomeScreen
@@ -14,6 +15,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MainTabNavigator() {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Tab.Navigator
@@ -53,15 +55,15 @@ export default function MainTabNavigator() {
         }
       })}
     >
-      <Tab.Screen name="Home" component={DashboardScreen} options={{ title: 'Accueil' }} />
-      <Tab.Screen name="Conseils" component={GoodPracticesScreen} />
+      <Tab.Screen name="Home" component={DashboardScreen} options={{ title: t('tabs.home') }} />
+      <Tab.Screen name="Conseils" component={GoodPracticesScreen} options={{ title: t('tabs.tips') }} />
       
       {/* Bouton de scan central plus stylé */}
       <Tab.Screen 
         name="Scan" 
         component={ScanScreen} 
         options={{ 
-          title: 'Scan IA',
+          title: t('tabs.scan'),
           tabBarIcon: () => (
             <View style={{
               backgroundColor: theme.colors.primary,
@@ -83,8 +85,8 @@ export default function MainTabNavigator() {
         }} 
       />
       
-      <Tab.Screen name="Meteo" component={WeatherScreen} options={{ title: 'Météo' }} />
-      <Tab.Screen name="Profil" component={ProfileScreen} />
+      <Tab.Screen name="Meteo" component={WeatherScreen} options={{ title: t('tabs.weather') }} />
+      <Tab.Screen name="Profil" component={ProfileScreen} options={{ title: t('tabs.profile') }} />
     </Tab.Navigator>
   );
 }

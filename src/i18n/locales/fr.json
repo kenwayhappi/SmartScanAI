@@ -1,0 +1,89 @@
+{
+  "onboarding": {
+    "slide1_title": "Détection IA Rapide",
+    "slide1_desc": "Prenez en photo vos plants de cacao et identifiez instantanément les maladies grâce à notre intelligence artificielle.",
+    "slide2_title": "Conseils Personnalisés",
+    "slide2_desc": "Accédez à un catalogue complet de bonnes pratiques et recevez des recommandations adaptées à votre plantation.",
+    "slide3_title": "Météo Intelligente",
+    "slide3_desc": "Anticipez les risques agricoles grâce à nos alertes météo locales et protégez vos récoltes.",
+    "skip": "Passer",
+    "prev": "Précédent",
+    "next": "Suivant",
+    "start": "Commencer"
+  },
+  "auth": {
+    "app_title": "Smart Scan AI",
+    "app_subtitle": "L'assistant intelligent pour la culture du cacao",
+    "login_title": "Connexion",
+    "email_label": "Email",
+    "password_label": "Mot de passe",
+    "login_button": "Se connecter",
+    "create_account_button": "Créer un compte",
+    "tutorial_link": "Revoir la présentation (Tutoriel)",
+    "error_fill_fields": "Veuillez remplir tous les champs.",
+    "error_login_failed": "Identifiants incorrects ou erreur de connexion.",
+    
+    "register_title": "Créer un compte",
+    "confirm_password_label": "Confirmer le mot de passe",
+    "register_button": "S'inscrire",
+    "back_to_login": "Déjà un compte ? Se connecter",
+    "error_password_mismatch": "Les mots de passe ne correspondent pas.",
+    "error_register_failed": "Erreur lors de la création du compte."
+  },
+  "profile": {
+    "my_info": "Mes informations",
+    "full_name": "Nom complet",
+    "farm_name": "Nom de l'exploitation",
+    "security": "Sécurité (Optionnel)",
+    "new_email": "Nouvel Email",
+    "new_password": "Nouveau Mot de passe",
+    "old_password": "Ancien mot de passe (Requis)",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "edit_profile": "Modifier le profil",
+    "logout": "Se déconnecter",
+    "language_pref": "Préférences de langue",
+    "select_language": "Langue de l'application",
+    "success_update": "Votre profil a été mis à jour avec succès.",
+    "error_update": "Une erreur est survenue lors de la mise à jour.",
+    "error_req_old_pass": "Vous devez renseigner votre ancien mot de passe pour des raisons de sécurité.",
+    "error_auth_failed": "L'ancien mot de passe est incorrect."
+  },
+  "tabs": {
+    "home": "Accueil",
+    "tips": "Conseils",
+    "scan": "Scan IA",
+    "weather": "Météo",
+    "profile": "Profil"
+  },
+  "dashboard": {
+    "welcome": "Smart Scan AI",
+    "welcome_sub": "Bon retour sur votre exploitation",
+    "quick_weather": "Aperçu actuel. Voir plus ➔",
+    "what_to_do": "Que faire aujourd'hui ?",
+    "new_scan": "Nouveau Diagnostic",
+    "scan_desc": "Analysez vos plants avec l'IA",
+    "tip_of_day": "Conseil du jour",
+    "tip_title": "Taille de formation",
+    "tip_desc": "Une bonne taille permet de réduire l'humidité et d'éviter les maladies fongiques..."
+  },
+  "scan": {
+    "permission_text": "Nous avons besoin de votre permission pour utiliser la caméra afin d'analyser les plants.",
+    "permission_btn": "Accorder la permission",
+    "instructions": "Placez la feuille ou le cabosse malade au centre du cadre"
+  },
+  "weather": {
+    "title": "Météo et Prévisions",
+    "forecast": "Prévisions sur 7 jours"
+  },
+  "diagnostic": {
+    "title": "Résultat du Diagnostic",
+    "analyzing": "Analyse en cours...",
+    "found_disease": "Maladie détectée",
+    "symptoms": "Symptômes :",
+    "treatment": "Traitement recommandé :"
+  },
+  "tips": {
+    "title": "Bonnes Pratiques Agricoles"
+  }
+}
