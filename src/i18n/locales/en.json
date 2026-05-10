@@ -12,7 +12,7 @@
     "start": "Get Started"
   },
   "auth": {
-    "app_title": "Smart Scan AI",
+    "app_title": "Smart Cacao IA",
     "app_subtitle": "The smart assistant for cocoa farming",
     "login_title": "Login",
     "email_label": "Email",
@@ -47,17 +47,33 @@
     "success_update": "Your profile has been successfully updated.",
     "error_update": "An error occurred during the update.",
     "error_req_old_pass": "You must enter your old password for security reasons.",
-    "error_auth_failed": "The old password is incorrect."
+    "error_auth_failed": "The old password is incorrect.",
+    "account_settings": "Account Settings",
+    "farm_owner": "Farm Owner",
+    "personal_info": "Personal Information",
+    "edit_name_farm": "Edit name and farm",
+    "security_creds": "Security & Credentials",
+    "email_password": "Email, password",
+    "new_email": "New Email",
+    "new_password": "New Password",
+    "old_password_req": "Current Password (Required)",
+    "update_security": "Update Security",
+    "preferences": "Preferences",
+    "app_language": "App Language",
+    "disconnect": "Log Out",
+    "disconnect_confirm": "Are you sure you want to log out?"
   },
   "tabs": {
     "home": "Home",
     "tips": "Tips",
     "scan": "AI Scan",
     "weather": "Weather",
-    "profile": "Profile"
+    "profile": "Settings",
+    "calendar": "Calendar",
+    "chat": "AI Chat"
   },
   "dashboard": {
-    "welcome": "Smart Scan AI",
+    "welcome": "Smart Cacao IA",
     "welcome_sub": "Welcome back to your farm",
     "quick_weather": "Current overview. See more ➔",
     "what_to_do": "What to do today?",

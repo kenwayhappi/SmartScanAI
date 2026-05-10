@@ -1,10 +1,10 @@
-# 🌱 Smart Scan AI - Assistant Intelligent pour la Culture du Cacao
+# 🌱 Smart Cacao IA - Assistant Intelligent pour la Culture du Cacao
 
-Bienvenue dans le dépôt du projet **Smart Scan AI**, une application mobile développée en React Native (Expo) visant à révolutionner l'assistance agricole pour les producteurs de cacao en Afrique.
+Bienvenue dans le dépôt du projet **Smart Cacao IA**, une application mobile développée en React Native (Expo) visant à révolutionner l'assistance agricole pour les producteurs de cacao en Afrique.
 
 ## 📱 Aperçu du Projet
 
-Smart Scan AI est une solution numérique qui allie technologie de pointe et accessibilité terrain pour réduire les pertes agricoles dues aux maladies (comme la pourriture brune). Elle offre un diagnostic visuel, des recommandations adaptées et un suivi météo intelligent.
+Smart Cacao IA est une solution numérique qui allie technologie de pointe et accessibilité terrain pour réduire les pertes agricoles dues aux maladies (comme la pourriture brune). Elle offre un diagnostic visuel, des recommandations adaptées et un suivi météo intelligent.
 
 ## 🚀 Fonctionnalités Principales
 
@@ -132,8 +132,8 @@ Voici les étapes (la séquence) pour le rapport :
 
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/votre-nom/SmartScanAI.git
-   cd SmartScanAI
+   git clone https://github.com/votre-nom/SmartCacaoIA.git
+   cd SmartCacaoIA
    ```
 
 2. **Installer les dépendances**

@@ -5,10 +5,10 @@ import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 // Screens
-import DashboardScreen from '../screens/DashboardScreen'; // We will rename or treat as HomeScreen
+import DashboardScreen from '../screens/DashboardScreen';
 import ScanScreen from '../screens/ScanScreen';
-import WeatherScreen from '../screens/WeatherScreen';
-import GoodPracticesScreen from '../screens/GoodPracticesScreen';
+import CalendarScreen from '../screens/CalendarScreen';
+import ChatBotScreen from '../screens/ChatBotScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
@@ -28,10 +28,10 @@ export default function MainTabNavigator() {
             iconName = '🏠';
           } else if (route.name === 'Scan') {
             iconName = '📷';
-          } else if (route.name === 'Meteo') {
-            iconName = '⛅';
-          } else if (route.name === 'Conseils') {
-            iconName = '🌿';
+          } else if (route.name === 'Calendrier') {
+            iconName = '📅';
+          } else if (route.name === 'ChatIA') {
+            iconName = '🤖';
           } else if (route.name === 'Profil') {
             iconName = '👤';
           }
@@ -56,7 +56,7 @@ export default function MainTabNavigator() {
       })}
     >
       <Tab.Screen name="Home" component={DashboardScreen} options={{ title: t('tabs.home') }} />
-      <Tab.Screen name="Conseils" component={GoodPracticesScreen} options={{ title: t('tabs.tips') }} />
+      <Tab.Screen name="Calendrier" component={CalendarScreen} options={{ title: t('tabs.calendar') }} />
       
       {/* Bouton de scan central plus stylé */}
       <Tab.Screen 
@@ -85,7 +85,7 @@ export default function MainTabNavigator() {
         }} 
       />
       
-      <Tab.Screen name="Meteo" component={WeatherScreen} options={{ title: t('tabs.weather') }} />
+      <Tab.Screen name="ChatIA" component={ChatBotScreen} options={{ title: t('tabs.chat') }} />
       <Tab.Screen name="Profil" component={ProfileScreen} options={{ title: t('tabs.profile') }} />
     </Tab.Navigator>
   );

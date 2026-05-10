@@ -12,7 +12,7 @@
     "start": "Commencer"
   },
   "auth": {
-    "app_title": "Smart Scan AI",
+    "app_title": "Smart Cacao IA",
     "app_subtitle": "L'assistant intelligent pour la culture du cacao",
     "login_title": "Connexion",
     "email_label": "Email",
@@ -47,17 +47,33 @@
     "success_update": "Votre profil a été mis à jour avec succès.",
     "error_update": "Une erreur est survenue lors de la mise à jour.",
     "error_req_old_pass": "Vous devez renseigner votre ancien mot de passe pour des raisons de sécurité.",
-    "error_auth_failed": "L'ancien mot de passe est incorrect."
+    "error_auth_failed": "L'ancien mot de passe est incorrect.",
+    "account_settings": "Paramètres du Compte",
+    "farm_owner": "Propriétaire de ferme",
+    "personal_info": "Informations personnelles",
+    "edit_name_farm": "Modifier le nom et la ferme",
+    "security_creds": "Sécurité & Identifiants",
+    "email_password": "Email, mot de passe",
+    "new_email": "Nouvel Email",
+    "new_password": "Nouveau Mot de passe",
+    "old_password_req": "Mot de passe actuel (obligatoire)",
+    "update_security": "Mettre à jour la sécurité",
+    "preferences": "Préférences",
+    "app_language": "Langue de l'application",
+    "disconnect": "Se déconnecter",
+    "disconnect_confirm": "Voulez-vous vraiment vous déconnecter ?"
   },
   "tabs": {
     "home": "Accueil",
     "tips": "Conseils",
     "scan": "Scan IA",
     "weather": "Météo",
-    "profile": "Profil"
+    "profile": "Paramètres",
+    "calendar": "Calendrier",
+    "chat": "Chat IA"
   },
   "dashboard": {
-    "welcome": "Smart Scan AI",
+    "welcome": "Smart Cacao IA",
     "welcome_sub": "Bon retour sur votre exploitation",
     "quick_weather": "Aperçu actuel. Voir plus ➔",
     "what_to_do": "Que faire aujourd'hui ?",
